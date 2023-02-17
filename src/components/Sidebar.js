@@ -1,10 +1,18 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+  // subscribe only specific portion of store
+  const isMenuOpen = useSelector((state) => state.bar.isMenuOpen);
+
+  if (!isMenuOpen) return null; // early return
   return (
-    <div className="w-48 h-[100vh] p-5 shadow-lg fixed">
+    <div className="w-56 h-[100vh] p-5 shadow-lg">
       <ul>
-        <li className="text-lg pt-7">Home</li>
+        <li className="text-lg pt-7">
+          <Link to="/">Home</Link>
+        </li>
         <li className="text-lg">Shorts</li>
         <li className="text-lg">Videos</li>
         <li className="text-lg">Live</li>
