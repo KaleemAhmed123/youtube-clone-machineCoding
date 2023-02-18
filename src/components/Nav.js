@@ -6,6 +6,7 @@ import { YOUTUBE_SEARCH_API } from "../utils/constants";
 const Nav = () => {
   const [suggestion, setSuggestion] = useState([]);
   const [query, setQuery] = useState("");
+  const [showList, setShowList] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,23 +58,29 @@ const Nav = () => {
             placeholder=" Search here ....."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setShowList(true)}
+            onBlur={() => setShowList(false)}
           />
           <button className="border border-gray-400 px-3 py-2 rounded-r-full bg-gray-100">
              🔎  
           </button>
         </div>
-        <div className="fixed bg-white px-2 w-[30.4rem] shadow-lg rounded-lg border border-gray-300">
-          <ul>
-            {suggestion.map((sg) => {
-              return (
-                <li className="p-[2px] ml-2 hover:bg-gray-100" key={sg}>
-                  🪕  {sg}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+
+        {showList && (
+          <div className="fixed bg-white px-2 w-[30.4rem] shadow-lg rounded-lg border border-gray-300">
+            <ul>
+              {suggestion.map((sg) => {
+                return (
+                  <li className="p-[2px] ml-2 hover:bg-gray-100" key={sg}>
+                    🪕  {sg}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </div>
+
       {/* right */}
       <div className="col-span-1">
         <img
