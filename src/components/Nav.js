@@ -59,7 +59,10 @@ const Nav = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setShowList(true)}
-            onBlur={() => setShowList(false)}
+            onBlur={() => {
+              setShowList(false);
+              setQuery("");
+            }}
           />
           <button className="border border-gray-400 px-3 py-2 rounded-r-full bg-gray-100">
              🔎  
