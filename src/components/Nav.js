@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/barSlice";
+import { cacheResult } from "..utils/searchSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
 
 const Nav = () => {
@@ -8,11 +9,17 @@ const Nav = () => {
   const [query, setQuery] = useState("");
   const [showList, setShowList] = useState(false);
   const dispatch = useDispatch();
+  const searchCache = useSelector((store) => store.search);
 
   useEffect(() => {
     // debouncing 250 ms
+
     const timer = setTimeout(() => {
-      getSuggestion();
+      if (searchCache[query]) {
+        setSuggestion(searchCache[query]);
+      } else {
+        getSuggestion();
+      }
     }, 200);
 
     return () => {
@@ -26,7 +33,13 @@ const Nav = () => {
     // setSuggestion(json[1]);
     const jsonData = await data.json();
     setSuggestion(jsonData[1]);
-    console.log(suggestion);
+    // console.log(suggestion);
+
+    dispatch(
+      cacheResult({
+        [query]: jsonData[1],
+      })
+    );
   };
 
   const toggleMenuHandler = () => {
