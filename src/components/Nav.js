@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/barSlice";
-import { cacheResult } from "..utils/searchSlice";
+import { cacheResult } from "../utils/searchSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
 
 const Nav = () => {
@@ -20,7 +20,7 @@ const Nav = () => {
       } else {
         getSuggestion();
       }
-    }, 200);
+    }, 250);
 
     return () => {
       clearTimeout(timer);
